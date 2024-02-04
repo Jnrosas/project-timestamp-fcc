@@ -10,21 +10,22 @@ var app = express();
 var cors = require('cors');
 app.use(cors({optionsSuccessStatus: 200}));  // some legacy browsers choke on 204
 
-// http://expressjs.com/en/starter/static-files.html
-app.use(express.static('public'));
+// http://expressjs.com/en/starter/static-files.html - Allows to pick up the style.css file
+app.use('/public', express.static(__dirname + '/public'));
 
-// http://expressjs.com/en/starter/basic-routing.html
+// http://expressjs.com/en/starter/basic-routing.html - Allows to pick up the html file
 app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-
-// your first API endpoint... 
-app.get("/api/hello", function (req, res) {
-  res.json({greeting: 'hello API'});
+// your first API endpoint... Routing
+app.get('/api/2015-12-25', function (req, res) {
+  res.json({"unix":1451001600000, "utc":"Fri, 25 Dec 2015 00:00:00 GMT"})
 });
 
-
+app.get('/api/1451001600000', (req, res) => {
+  res.json({"unix":1451001600000, "utc":"Fri, 25 Dec 2015 00:00:00 GMT"})
+});
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
